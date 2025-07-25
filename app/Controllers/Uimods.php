@@ -12,8 +12,7 @@ class Uimods extends BaseController
         $this->response->setHeader('Content-Type', 'text/javascript');
     }
 
-    public function getLightdark(): string
-    {
-        return view('uimods/lightdark.js');
-    }
+    public function getLightdark(): string {return view('uimods/lightdark.js');}
+    public function getSetroom(): string {return view('uimods/setroom.js');}
+
 }

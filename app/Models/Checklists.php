@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class Checklists extends Model
 {
     protected $table      = 'checklists';
     protected $primaryKey = 'id';

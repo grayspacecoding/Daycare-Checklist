@@ -17,4 +17,21 @@ class Sessionmods extends BaseController
         $this->response->setCookie($cookie);
         return $room;
     }
+
+    public function postGetroom() : string
+    {
+        return $this->request->getCookie('room') ?? '';
+    }
+
+    public function postExitroom() : string
+    {
+        $cookie = new Cookie('room', '', [
+            'expires' => time() - 3600, // Set to expire in the past
+            'path' => '/',
+            'secure' => true,
+            'httponly' => true,
+        ]);
+        $this->response->setCookie($cookie);
+        return '';
+    }
 }

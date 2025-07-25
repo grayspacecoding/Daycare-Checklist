@@ -41,7 +41,8 @@ abstract class BaseController extends Controller
      * Be sure to declare properties for any property fetch you initialized.
      * The creation of dynamic property is deprecated in PHP 8.2.
      */
-    // protected $session;
+    protected $session;
+    protected $view;
 
     /**
      * @return void
@@ -54,5 +55,12 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = service('session');
+        $this->session = service('session');
+
+        // Sets the "room" variable for use in views
+        $this->view = \Config\Services::renderer();
+        $room = $request->getCookie('room');
+        $this->view->setVar('room', $room);
+
     }
 }

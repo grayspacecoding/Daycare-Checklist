@@ -65,9 +65,9 @@
                 <div class="d-flex gap-2 fs-5">
                     <a href="/" data-thisisa-tooltip title="Dashboard"><i class="fa-solid fa-house-chimney text-dark"></i></a>
                     <span role="button" data-thisisa-tooltip title="New Checklist" onclick="document.dispatchEvent(new Event('checklist.new'))"><i class="fa-solid fa-file-circle-plus text-dark"></i></span>
-                    <div style="width: 0.5em;"></div>
+                    <div style="width: 0.5em;" class="d-none d-sm-block"></div>
                     <? foreach(['blue', 'green', 'yellow', 'purple'] as $color): ?>
-                    <span role="button" data-thisisa-tooltip title="<?= ucfirst($color) ?> Room" onclick="document.dispatchEvent(new CustomEvent('room.change', {detail: '<?= $color ?>'}))"><i class="fa-solid fa-square text-<?= $color ?>"></i></span>
+                    <span class="d-none d-sm-inline" role="button" data-thisisa-tooltip title="<?= ucfirst($color) ?> Room" onclick="document.dispatchEvent(new CustomEvent('room.change', {detail: '<?= $color ?>'}))"><i class="fa-solid fa-square text-<?= $color ?>"></i></span>
                     <? endforeach ?>
                     <div style="width: 0.5em;"></div>
                     <span role="button" data-thisisa-tooltip title="Exit" onclick="document.dispatchEvent(new Event('room.exit'))"><i class="fa-solid fa-door-open"></i></span>

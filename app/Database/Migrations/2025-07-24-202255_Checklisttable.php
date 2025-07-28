@@ -57,8 +57,7 @@ class Checklisttable extends Migration
             ],
             'form_data' => [
                 'type' => 'LONGTEXT',
-                'null' => false,
-                'default' => '{}',
+                'null' => false
             ],
             'deleteme' => [
                 'type' => 'LONGTEXT',

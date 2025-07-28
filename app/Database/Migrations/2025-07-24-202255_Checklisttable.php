@@ -14,7 +14,7 @@ class Checklisttable extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 36,
                 'null' => false,
-                'default' => new RawSql('uuid()'),
+                //'default' => new RawSql('uuid()'),
             ],
             'created' => [
                 'type' => 'TIMESTAMP',

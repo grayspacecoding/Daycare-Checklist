@@ -8,13 +8,8 @@ class Sessionmods extends BaseController
 {
     public function postSetroom($room) : string
     {
-        $cookie = new Cookie('room', $room, [
-            'expires' => (new DateTime('+1 year'))->getTimestamp(),
-            'path' => '/',
-            'secure' => true,
-            'httponly' => true,
-        ]);
-        $this->response->setCookie($cookie);
+        $setroomModel = model('Setroom');
+        $result = $setroomModel->setRoom($room);
         return $room;
     }
 
@@ -25,13 +20,8 @@ class Sessionmods extends BaseController
 
     public function postExitroom() : string
     {
-        $cookie = new Cookie('room', '', [
-            'expires' => time() - 3600, // Set to expire in the past
-            'path' => '/',
-            'secure' => true,
-            'httponly' => true,
-        ]);
-        $this->response->setCookie($cookie);
+        $setroomModel = model('Setroom');
+        $result = $setroomModel->clearRoom();
         return '';
     }
 }

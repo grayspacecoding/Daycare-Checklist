@@ -12,7 +12,7 @@ const changeRoomIndicator = (room) => {
     if (room) {
         const roomIndicator = document.querySelector('[data-room-indicator]');
         if (roomIndicator) {
-            roomIndicator.textContent = `- ${room.charAt(0).toUpperCase() + room.slice(1)} Room`;
+            roomIndicator.textContent = ` ${room.charAt(0).toUpperCase() + room.slice(1)} Room`;
             roomIndicator.className = `text-${room}`;
         }
     }

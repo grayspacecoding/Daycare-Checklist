@@ -20,7 +20,7 @@ class Checklists extends Model
     protected bool $updateOnlyChanged = true;
 
     protected $useTimestamps = true;
-    protected $dateFormat    = 'timestamp';
+    protected $dateFormat    = 'datetime';
     protected $createdField  = 'created';
     protected $updatedField  = 'updated';
     protected $deletedField  = 'deleted';

@@ -31,5 +31,5 @@ const newTheme = current === 'dark' ? 'light' : 'dark';
 setTheme(newTheme);
 }
 
-// Set initial theme on load
+// Set preferred theme on load - overrides the the browser/system preference if a user has set a preference
 setTheme(getPreferredTheme());

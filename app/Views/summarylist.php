@@ -14,7 +14,7 @@
         ]
     ] as $section): ?>
     <h1 class="h4 font-montserrat"><i class="<?= $section['icon'] ?>"></i> <?= $section['title'] ?></h1>
-    <table class="table table-sm mb-5">
+    <table class="table table-sm mb-5 table-striped table-hover">
         <thead>
             <tr>
                 <th class="w-75">Date</th>
@@ -24,6 +24,9 @@
         <tbody data-checklists-<?= $section['status'] ?> data-checklists></tbody>
     </table>
     <? endforeach ?>
+    <div class="text-center">
+        <a href="/checklists">See more...</a>
+    </div>
 </div>
 <script type="module">
     const getChecklists = async () => {
@@ -44,7 +47,7 @@
             for (const [key, value] of Object.entries(group)) {
                 const tbody = document.querySelector(`[data-checklists-${key}]`);
                 tbody.innerHTML = value.length ? value.map(item => `
-                    <tr>
+                    <tr data-checklist-open style="cursor: pointer;" data-href="/checklists/single/${item.id}">
                         <td>${new Date(item.date_applied).toLocaleDateString()}</td>
                         <td>${item.status}</td>
                     </tr>
@@ -64,6 +67,13 @@
 
     ['DOMContentLoaded', 'room.changed'].forEach(event => {
         document.addEventListener(event, getChecklists);
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('[data-checklist-open]')) {
+            const href = e.target.closest('[data-checklist-open]').dataset.href;
+            if (href) {window.location.href = href;}
+        }
     });
 </script>
 <?= $this->endSection() ?>

@@ -4,8 +4,17 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Daily Checklist | LSF</title>
+        <script>
+            (function() {
+                const themeKey = 'preferred-theme';
+                const stored = localStorage.getItem(themeKey);
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = stored === 'light' || stored === 'dark' ? stored : (prefersDark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-bs-theme', theme);
+            })();
+        </script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        <script src="https://kit.fontawesome.com/21998ddf7f.js" crossorigin="anonymous"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -22,6 +31,28 @@
                 font-family: "Bitcount Single", sans-serif;
                 font-optical-sizing: auto;
             }
+            
+            /* Dark mode manual swapping */
+            [data-bs-theme="dark"] .text-light {
+                color: var(--bs-dark) !important;
+            }
+            [data-bs-theme="dark"] .border-dark {
+                border-color: var(--bs-light) !important;
+            }
+            
+            [data-bs-theme="dark"] .text-dark {
+                color: var(--bs-light) !important;
+            }
+            [data-bs-theme="dark"] .bg-secondary {
+                background-color: var(--bs-dark) !important;
+            }
+
+            [data-bs-theme="dark"] .bg-dark {
+                background-color: var(--bs-dark) !important;
+            }
+            [data-bs-theme="dark"] .bg-light {
+                background-color: var(--bs-dark) !important;
+            }
         </style>
     </head>
     <body>
@@ -32,14 +63,15 @@
                     <span class="fw-normal" data-room-indicator></span>
                 </div>
                 <div class="d-flex gap-2 fs-5">
-                    <i role="button" data-thisisa-tooltip title="New Checklist" class="bi bi-file-earmark-plus-fill text-info"></i>
+                    <a href="/" data-thisisa-tooltip title="Dashboard"><i class="fa-solid fa-house-chimney text-dark"></i></a>
+                    <span role="button" data-thisisa-tooltip title="New Checklist" onclick="document.dispatchEvent(new Event('checklist.new'))"><i class="fa-solid fa-file-circle-plus text-dark"></i></span>
                     <div style="width: 0.5em;"></div>
                     <? foreach(['blue', 'green', 'yellow', 'purple'] as $color): ?>
-                    <i role="button" data-thisisa-tooltip title="<?= ucfirst($color) ?> Room" class="bi bi-square-fill text-<?= $color ?>" onclick="document.dispatchEvent(new CustomEvent('room.change', {detail: '<?= $color ?>'}))"></i>
+                    <span role="button" data-thisisa-tooltip title="<?= ucfirst($color) ?> Room" onclick="document.dispatchEvent(new CustomEvent('room.change', {detail: '<?= $color ?>'}))"><i class="fa-solid fa-square text-<?= $color ?>"></i></span>
                     <? endforeach ?>
                     <div style="width: 0.5em;"></div>
-                    <i role="button" data-thisisa-tooltip title="Exit" class="bi bi-door-closed" onclick="document.dispatchEvent(new Event('room.exit'))"></i>
-                    <i role="button" data-thisisa-tooltip title="Toggle dark/light mode" class="bi bi-circle-half" onclick="document.dispatchEvent(new Event('darklight.toggle'))"></i>
+                    <span role="button" data-thisisa-tooltip title="Exit" onclick="document.dispatchEvent(new Event('room.exit'))"><i class="fa-solid fa-door-open"></i></span>
+                    <span role="button" data-thisisa-tooltip title="Toggle dark/light mode" onclick="document.dispatchEvent(new Event('darklight.toggle'))"><i class="fa-solid fa-circle-half-stroke"></i></span>
                 </div>
             </header>
             <main class="flex-grow-1">
@@ -55,6 +87,7 @@
         <script type="module">
             import { toggleTheme } from '<?= base_url('uimods/lightdark') ?>';
             import '<?= base_url('uimods/setroom') ?>';
+            import '<?= base_url('uimods/newchecklist') ?>';
 
             document.addEventListener('darklight.toggle', toggleTheme);
             

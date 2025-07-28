@@ -7,14 +7,18 @@ use DateTime;
 
 class Checklists extends BaseController
 {
+    public function __construct() {
+        $this->clModel = new \App\Models\Checklists();
+    }
+
     public function getIndex(): string {
         return view('fulllist');
     }
 
     public function getSingle($id) {
-        $checklist = model('checklists')->find($id);
+        $checklist = $this->clModel->find($id);
         $room = $checklist->room;
-        $setroomModel = model('Setroom');
+        $setroomModel = new \App\Models\Setroom();
         $room = $setroomModel->setRoom($room);
         return view('single', [
             'checklist' => $checklist,
@@ -33,11 +37,11 @@ class Checklists extends BaseController
     public function postCrud($action, $specifier = false): object
     {
         try{
-            $clModel = model('checklists');
+            if(!$this->clModel){error_log("Checklists model not found!");}
             switch($action) {
                 case "all":
                     $columns = ['id', 'room', 'created', 'completed_on', 'date_applied', 'status'];
-                    $data = $clModel->where('room', $this->request->getCookie('room'))->findAll($specifier);
+                    $data = $this->clModel->where('room', $this->request->getCookie('room'))->findAll($specifier);
                     return $this->response->setJSON(json_encode($data));
                     break;
                 case "single":
@@ -52,7 +56,7 @@ class Checklists extends BaseController
                         "room" => $this->request->getCookie('room'),
                         "date_applied" => date('Y-m-d')
                     ];
-                    $clModel->insert($data);
+                    $this->clModel->insert($data);
                     return $this->response->setJSON(json_encode([
                         'success' => true,
                         'id' => $uuid
@@ -65,10 +69,10 @@ class Checklists extends BaseController
                         "form_data" => json_encode($_POST),
                         "room" => $this->request->getCookie('room'),
                     ];
-                    $clModel->save($data);
+                    $this->clModel->save($data);
                     return $this->response->setJSON(json_encode([
                         'success' => true,
-                        'id' => $data['id'] ?? $clModel->insertID()
+                        'id' => $data['id'] ?? $this->clModel->insertID()
                     ]));
                     break;
             }

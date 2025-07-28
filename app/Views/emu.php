@@ -69,7 +69,7 @@
                     <? foreach(['blue', 'green', 'yellow', 'purple'] as $color): ?>
                     <span class="d-none d-sm-inline" role="button" data-thisisa-tooltip title="<?= ucfirst($color) ?> Room" onclick="document.dispatchEvent(new CustomEvent('room.change', {detail: '<?= $color ?>'}))"><i class="fa-solid fa-square text-<?= $color ?>"></i></span>
                     <? endforeach ?>
-                    <div style="width: 0.5em;"></div>
+                    <div style="width: 0.5em;" class="d-none d-sm-block"></div>
                     <span role="button" data-thisisa-tooltip title="Exit" onclick="document.dispatchEvent(new Event('room.exit'))"><i class="fa-solid fa-door-open"></i></span>
                     <span role="button" data-thisisa-tooltip title="Toggle dark/light mode" onclick="document.dispatchEvent(new Event('darklight.toggle'))"><i class="fa-solid fa-circle-half-stroke"></i></span>
                 </div>

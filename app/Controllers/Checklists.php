@@ -9,6 +9,7 @@ class Checklists extends BaseController
 {
     public function __construct() {
         $this->clModel = new \App\Models\Checklists();
+        $this->clSchema = new \App\Models\Checklistschema();
     }
 
     public function getIndex(): string {
@@ -20,9 +21,10 @@ class Checklists extends BaseController
         $room = $checklist->room;
         $setroomModel = new \App\Models\Setroom();
         $room = $setroomModel->setRoom($room);
-        return view('single', [
+        return view("single/{$checklist->status}", [
             'checklist' => $checklist,
-            'formdata' => json_decode($checklist->form_data)
+            'formdata' => json_decode($checklist->form_data),
+            'schema' => $this->clSchema->currentVersion(),
         ]);
     }
 
@@ -73,6 +75,18 @@ class Checklists extends BaseController
                     return $this->response->setJSON(json_encode([
                         'success' => true,
                         'id' => $data['id'] ?? $this->clModel->insertID()
+                    ]));
+                    break;
+                case "finalize":
+                    $data = [
+                        "id" => $specifier,
+                        "completed_on" => date('Y-m-d H:i:s'),
+                        "status" => 'finished'
+                    ];
+                    $this->clModel->save($data);
+                    return $this->response->setJSON(json_encode([
+                        'success' => true,
+                        'id' => $specifier
                     ]));
                     break;
             }

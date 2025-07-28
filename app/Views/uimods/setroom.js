@@ -32,7 +32,7 @@ document.addEventListener('room.changed', event => {
     changeRoomIndicator(event.detail);
 });
 
-document.addEventListener('room.exited', () =>{window.location.reload();});
+document.addEventListener('room.exited', () =>{window.location.href = '/';});
 
 document.addEventListener('room.exit', event => {
     fetch('/sessionmods/exitroom', {method: 'POST'})

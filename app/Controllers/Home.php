@@ -7,11 +7,8 @@ use DateTime;
 class Home extends BaseController
 {
     public function index(): string {
-        return $this->summary();
-    }
-
-    protected function summary(): string {
-        return view('summarylist');
+        if ($this->request->getCookie('room')) {return view('summarylist');}
+        else {return view('intro');}
     }
 
     public function getFull(): string {

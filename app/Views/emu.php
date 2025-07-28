@@ -59,7 +59,7 @@
         <div style="min-height: 100vh;" class="d-flex flex-column">
             <header class="d-flex justify-content-between align-items-center py-2 px-3 bg-secondary bg-opacity-25">
                 <div class="fs-4 fw-bold font-montserrat">
-                    Daily Checklist | LSF
+                    <span class="d-none d-sm-inline">Daily Checklist | </span>LSF
                     <span class="fw-normal" data-room-indicator></span>
                 </div>
                 <div class="d-flex gap-2 fs-5">

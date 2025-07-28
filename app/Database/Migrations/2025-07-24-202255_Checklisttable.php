@@ -75,7 +75,7 @@ class Checklisttable extends Migration
             MODIFY `id` varchar(36) NOT NULL DEFAULT (uuid()),
             MODIFY `created` timestamp NOT NULL DEFAULT current_timestamp(),
             MODIFY `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-            MODIFY `form_data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{}',
+            MODIFY `form_data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
             MODIFY `deleteme` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`deleteme`)),
             ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci");
     }

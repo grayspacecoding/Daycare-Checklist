@@ -13,6 +13,7 @@
                 document.documentElement.setAttribute('data-bs-theme', theme);
             })();
         </script>
+        <link rel="icon" type="image/x-icon" href="https://parseley.net/parseley-bright.svg">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/21998ddf7f.js" crossorigin="anonymous"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">

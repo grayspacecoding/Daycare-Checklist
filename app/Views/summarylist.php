@@ -17,7 +17,7 @@
     <table class="table table-sm mb-5 table-striped table-hover">
         <thead>
             <tr>
-                <th class="w-75">Date</th>
+                <th class="w-75">Checklist Date</th>
                 <th>Status</th>
             </tr>
         </thead>
@@ -25,7 +25,7 @@
     </table>
     <? endforeach ?>
     <div class="text-center">
-        <a href="/checklists">See more...</a>
+        <!--<a href="/checklists">See more...</a>-->
     </div>
 </div>
 <script type="module">
@@ -48,8 +48,8 @@
                 const tbody = document.querySelector(`[data-checklists-${key}]`);
                 tbody.innerHTML = value.length ? value.map(item => `
                     <tr data-checklist-open style="cursor: pointer;" data-href="/checklists/single/${item.id}">
-                        <td>${new Date(item.date_applied).toLocaleDateString()}</td>
-                        <td>${item.status}</td>
+                        <td class="${key == 'active' ? 'lead py-2' : 'fst-italic small text-muted'}">${new Date(item.date_applied).toLocaleDateString('en-US', {timeZone: 'UTC'})}</td>
+                        <td class="${key == 'active' ? 'lead py-2' : 'fst-italic small text-muted'}" style="text-transform: capitalize;">${key}</td>
                     </tr>
                 `).join('') : none(key);
             }

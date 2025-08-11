@@ -6,7 +6,7 @@
             <span class=""><i class="fa-solid fa-calendar"></i> <?= date("M d:") ?></span>
             <? if (empty($checklist) && date('N') >= 6): ?>
             Not started, but it's the weekend.
-            <button class="ms-4 btn btn-info">Start a checklist anyway?</button>
+            <button class="ms-4 btn btn-info" onclick="document.dispatchEvent(new Event('checklist.new'))">Start a checklist anyway?</button>
     
             <? elseif (empty($checklist)): ?>
             <span class="text-danger">Not started</span>
@@ -18,7 +18,7 @@
     
             <? elseif ($checklist->status == 'finished'): ?>
             <span class="text-info">Finished!</span>
-            <button class="ms-4 btn btn-info">View today's checklist</button>
+            <a class="ms-4 btn btn-info" href="/checklists/single/<?= $checklist->id ?>">View today's checklist</a>
             <? endif ?>
         </h1>
         <div>
@@ -51,7 +51,25 @@
                 </div>
                 <? endforeach; ?>
             </div>
-
+        </div>
+        <div>
+            <h1 class="h4 font-montserrat">Recent Checklists</h1>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+                <? foreach($recent as $c): ?>
+                <div class="col">
+                    <a href="/checklists/single/<?= $c->id ?>" class="mb-3 text-decoration-none d-block text-dark border border-secondary rounded-3 p-2">
+                        <i class="fa-solid fa-calendar-day"></i><b><?= date("l M. jS", strtotime($c->date_applied)) ?></b>
+                        <i class="float-end small text-muted"><?= ucfirst($c->status) ?></i><br>
+                        <small style="font-size: 0.6rem;" class="text-secondary font-monospace p-1">id: <?= $c->id ?></small>
+                    </a>
+                </div>
+                <? endforeach ?>
+                <div class="col d-flex align-items-center">
+                    <a href="/dashboard/fulllist" class="mb-3 text-decoration-none d-block p-2">
+                        All checklists <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

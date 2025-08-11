@@ -6,27 +6,35 @@ use DateTime;
 
 class Dashboard extends BaseController
 {
+    function __construct() {
+        $this->clModel = new \App\Models\Checklists();
+    }
+
     public function getIndex() {
+        $room = $this->request->getCookie('room');
         return view('dashboard', [
-            $room = $this->request->getCookie('room'),
             'room' => $room,
             'checklist' => $this->todaysChecklist($room),
-            'previous' => $this->previousChecklist($room)
+            'previous' => $this->previousChecklist($room),
+            'recent' => $this->clModel->orderBy('date_applied', 'DESC')->where('room', $room)->findAll(10),
         ]);
     }
 
+    public function getFulllist() {
+        $room = $this->request->getCookie('room');
+        return view('fulllist', ["lists" => $this->clModel->orderBy('date_applied', 'DESC')->where('room', $room)->findAll()]);
+    }
+
     protected function todaysChecklist($room, $previous = false) {
-        $cklstModel = new \App\Models\Checklists();
         $today = date('o-m-d');
-        return $cklstModel->where(['date_applied' => $today, 'room' => $room])->first();
+        return $this->clModel->where(['date_applied' => $today, 'room' => $room])->first();
     }
 
     protected function previousChecklist($room) {
         $items = [];
         $counts = 0;
-        $cklstModel = new \App\Models\Checklists();
         $yesterday = date('o-m-d', strtotime('-1 day'));
-        $list = $cklstModel->orderBy('date_applied', 'DESC')->where(['date_applied <=' => $yesterday, 'room' => $room])->first();
+        $list = $this->clModel->orderBy('date_applied', 'DESC')->where(['date_applied <=' => $yesterday, 'room' => $room])->first();
         if (!$list) {$items[] = 'No previous checklist found!'; $counts = 1;}
         elseif ($list->status == 'active') {$items[] = 'The previous checklist is still in progress!'; $counts = 1;}
         else {

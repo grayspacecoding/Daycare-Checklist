@@ -8,52 +8,31 @@
                     <th class="text-nowrap">Room</th>
                     <th class="text-nowrap">Status</th>
                     <th class="text-nowrap">Checklist Date</th>
-                    <th class="text-nowrap">Started</th>
-                    <th class="text-nowrap">Finished</th>
+                    <th class="text-nowrap">id/hash</th>
                 </tr>
             </thead>
-            <tbody data-checklists-all></tbody>
+            <tbody data-checklists-all>
+                <? foreach($lists as $row): ?>
+                    <tr data-checklist-open data-href="/checklists/single/<?= $row->id ?>">
+                        <td><i class="fa-solid fa-square text-<?= $row->room ?>"></i> <?= ucfirst($row->room) ?></td>
+                        <td>
+                            <i class="fa-solid fa-<?= $row->status == "active"? 'arrows-spin': 'check' ?> text-<?= $row->status == "active"? 'orange': 'success' ?>"></i>
+                            <?= ucfirst($row->status) ?>
+                        </td>
+                        <td><?= date("F jS (D)", strtotime($row->date_applied)) ?></td>
+                        <td class="font-monospace small text-muted"><?= $row->id ?></td>
+                    </tr>
+                <? endforeach ?>
+            </tbody>
         </table>
     </form>
 </div>
 <script type="module">
-    const getChecklists = async () => {
-        try {
-            const response = await fetch('/checklists/crud/all/750', { method: 'POST' });
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const tbody = document.querySelector(`[data-checklists-all]`);
-            const data = await response.json();
-            if (data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="text-center">No checklists found.</td></tr>`;
-                return;
-            }
-            tbody.innerHTML = '';
-            for (const item of data) {
-                tbody.innerHTML += `
-                    <tr>
-                        <td style="text-transform: capitalize;">${item.room}</td>
-                        <td style="text-transform: capitalize;">${item.status}</td>
-                        <td>${new Date(item.date_applied).toLocaleDateString()}</td>
-                        <td>${item.created ? new Date(item.created).toLocaleDateString() : 'N/A'}</td>
-                        <td>${item.completed_on ? new Date(item.completed_on).toLocaleDateString() : 'N/A'}</td>
-                    </tr>
-                `;
-            }
-        } catch (error) {
-            console.error('Error fetching checklists:', error);
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('[data-checklist-open]')) {
+            const href = e.target.closest('[data-checklist-open]').dataset.href;
+            if (href) {window.location.href = href;}
         }
-    };
-
-    const loading = `<tr><td colspan="5" class="text-center">Loading...</td></tr>`;
-
-    document.addEventListener('room.change', ()=>{
-        document.querySelector(`[data-checklists-all]`).innerHTML = loading;
-    });
-
-    ['DOMContentLoaded', 'room.changed'].forEach(event => {
-        document.addEventListener(event, getChecklists);
     });
 </script>
 <?= $this->endSection() ?>

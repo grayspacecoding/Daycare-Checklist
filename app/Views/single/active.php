@@ -148,7 +148,7 @@
         }
     };
 
-    document.querySelector('[data-finalize-btn]').addEventListener('click', finalizeChecklist);
+    document.querySelector('[data-finalize-btn]').addEventListener('click', finalizeChecklistOld);
 
     [`input[type="number"]`, `input[type="text"]`].forEach(selector => {
         document.querySelectorAll(selector).forEach((input) => {

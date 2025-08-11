@@ -89,12 +89,13 @@
                 </div>
                 <div class="d-flex gap-2 fs-5 align-items-end">
                     <? if($room): ?>
+                    <a href="https://parseley.atlassian.net/servicedesk/customer/portal/34" target="_blank" data-thisisa-tooltip title="IT Help"><i class="fa-solid fa-bell-concierge text-dark"></i></a>
                     <a href="/dashboard" data-thisisa-tooltip title="Dashboard"><i class="fa-solid fa-house-chimney text-dark"></i></a>
                     <span role="button" data-thisisa-tooltip title="New Checklist" onclick="document.dispatchEvent(new Event('checklist.new'))"><i class="fa-solid fa-file-circle-plus text-dark"></i></span>
                     <? endif ?>
                     <span role="button" data-thisisa-tooltip title="Toggle dark/light mode" onclick="document.dispatchEvent(new Event('darklight.toggle'))"><i class="fa-solid fa-circle-half-stroke"></i></span>
                     <div style="width: 0.5em;" class="d-none d-sm-block"></div>
-                    <span role="button" data-thisisa-tooltip title="Exit" onclick="document.dispatchEvent(new Event('room.exit'))"><img src="/quad.svg" class="" style="height: 1.7rem !important;"></span>
+                    <span role="button" data-thisisa-tooltip title="Choose a room" onclick="document.dispatchEvent(new Event('room.exit'))"><img src="/quad.svg" class="" style="height: 1.7rem !important;"></span>
                 </div>
             </header>
             <main class="flex-grow-1">

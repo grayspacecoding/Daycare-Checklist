@@ -24,6 +24,7 @@
             .text-blue {color: #0d6efd;}
             .text-green {color: #198754;}
             .text-yellow {color: #b48a0cff;}
+            .text-orange {color: #ff8c00;}
             .font-montserrat {
                 font-family: "Montserrat", sans-serif;
                 font-optical-sizing: auto;
@@ -54,25 +55,47 @@
             [data-bs-theme="dark"] .bg-light {
                 background-color: var(--bs-dark) !important;
             }
+
+            [data-bs-theme="dark"] .text-bg-black {
+                color: #FFF !important;
+                background-color: #000 !important;
+            }
+            [data-bs-theme="light"] .text-bg-black {
+                color: #FFF !important;
+                background-color: #FFF !important;
+            }
+
+            [data-bs-theme="dark"] .text-bg-white {
+                color: #FFF !important;
+                background-color: #000 !important;
+            }
+            [data-bs-theme="light"] .text-bg-white {
+                color: #000 !important;
+                background-color: #FFF !important;
+            }
+            [data-bs-theme="dark"] .btn-outline-dark {
+                color: #FFF !important;
+                background-color: transparent !important;
+                border-color: #FFF !important;
+            }
         </style>
     </head>
     <body>
         <div style="min-height: 100vh;" class="d-flex flex-column">
             <header class="d-flex justify-content-between align-items-center py-2 px-3 bg-secondary bg-opacity-25">
                 <div class="fs-4 fw-bold font-montserrat">
-                    <span class="d-none d-sm-inline">Daily Checklist | </span>LSF
-                    <span class="fw-normal" data-room-indicator></span>
+                    <span class="d-none d-sm-inline">Daily Checklist | </span>
+                    <span class="<?= $room? "text-$room": "" ?>" data-room-indicator><?= $room? ucfirst($room)." Room" : 'LSF' ?></span>
                 </div>
-                <div class="d-flex gap-2 fs-5">
-                    <a href="/" data-thisisa-tooltip title="Dashboard"><i class="fa-solid fa-house-chimney text-dark"></i></a>
+                <div class="d-flex gap-2 fs-5 align-items-end">
+                    <? if($room): ?>
+                    <a href="https://parseley.atlassian.net/servicedesk/customer/portal/34" target="_blank" data-thisisa-tooltip title="IT Help"><i class="fa-solid fa-bell-concierge text-dark"></i></a>
+                    <a href="/dashboard" data-thisisa-tooltip title="Dashboard"><i class="fa-solid fa-house-chimney text-dark"></i></a>
                     <span role="button" data-thisisa-tooltip title="New Checklist" onclick="document.dispatchEvent(new Event('checklist.new'))"><i class="fa-solid fa-file-circle-plus text-dark"></i></span>
-                    <div style="width: 0.5em;" class="d-none d-sm-block"></div>
-                    <? foreach(['blue', 'green', 'yellow', 'purple'] as $color): ?>
-                    <span class="d-none d-sm-inline" role="button" data-thisisa-tooltip title="<?= ucfirst($color) ?> Room" onclick="document.dispatchEvent(new CustomEvent('room.change', {detail: '<?= $color ?>'}))"><i class="fa-solid fa-square text-<?= $color ?>"></i></span>
-                    <? endforeach ?>
-                    <div style="width: 0.5em;" class="d-none d-sm-block"></div>
-                    <span role="button" data-thisisa-tooltip title="Exit" onclick="document.dispatchEvent(new Event('room.exit'))"><i class="fa-solid fa-door-open"></i></span>
+                    <? endif ?>
                     <span role="button" data-thisisa-tooltip title="Toggle dark/light mode" onclick="document.dispatchEvent(new Event('darklight.toggle'))"><i class="fa-solid fa-circle-half-stroke"></i></span>
+                    <div style="width: 0.5em;" class="d-none d-sm-block"></div>
+                    <span role="button" data-thisisa-tooltip title="Choose a room" onclick="document.dispatchEvent(new Event('room.exit'))"><img src="/quad.svg" class="" style="height: 1.7rem !important;"></span>
                 </div>
             </header>
             <main class="flex-grow-1">

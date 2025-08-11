@@ -57,6 +57,12 @@
     <span class="font-bitcount text-info" data-autosave-indicator></span>
     <button class="btn btn-sm btn-info rounded-0" data-finalize-btn>Submit</button>
 </div>
+
+<div data-certify-modal class="position-absolute top-0 start-0 w-100 h-100 d-none align-items-center justify-content-center" style="backdrop-filter: blur(1.5px); z-index: 1000;">
+    <div class="text-bg-white p-5 shadow rounded-4">
+        <p><b class="lead text-info">Ready to complete your daily checklist?</b><br>Once you sign, you will not be able to make further changes.</p>
+    </div>
+</div>
 <script type="module">
     document.addEventListener('room.changed', () => {window.location.href = '/';});
 
@@ -110,6 +116,18 @@
     });
 
     const finalizeChecklist = () => {
+        const modal = document.querySelector('[data-certify-modal]');
+        modal.classList.replace('d-none', 'd-flex');
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal || e.target.closest('.text-bg-white')) {
+                modal.classList.replace('d-flex', 'd-none');
+            } else if (e.target.closest('[data-finalize-btn]')) {
+                finalizeChecklistOld();
+            }
+        });
+    };
+
+    const finalizeChecklistOld = () => {
         if (confirm('Are you ready to submit your finished checklist? Once submitted, you will not be able to make further changes.')) {
             fetch('/checklists/crud/finalize/<?= $checklist->id ?>', {
                 method: 'POST',
@@ -130,7 +148,7 @@
         }
     };
 
-    document.querySelector('[data-finalize-btn]').addEventListener('click', finalizeChecklist);
+    document.querySelector('[data-finalize-btn]').addEventListener('click', finalizeChecklistOld);
 
     [`input[type="number"]`, `input[type="text"]`].forEach(selector => {
         document.querySelectorAll(selector).forEach((input) => {
@@ -139,6 +157,5 @@
             });
         });
     });
-
 </script>
 <?= $this->endSection() ?>

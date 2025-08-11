@@ -1,19 +1,31 @@
 <?= $this->extend('emu') . $this->section('content') ?>
 <div class="container py-4">
+    <div class="mb-5 pb-5 pt-3 border-bottom">
+        <button type="button" class="btn btn-outline-dark d-flex align-items-center gap-2">
+            <i class="fa-solid fa-file-circle-plus fs-1"></i>
+            <div class="font-montserrat fs-4 text-start">
+                <b>Begin Today's Checklist</b><br>
+                <small class="font-bitcount">&nbsp;<?= date('l, F jS') ?></small>
+            </div>
+        </button>
+    </div>
     <?
     foreach([
         [
             "title" => "Active Lists",
+            "helper" => "These checklists are actively being filled out. You can edit them until you finalize.",
             "icon" => "bi bi-play-circle-fill text-primary",
             "status" => "active"
         ],
         [
             "title" => "Completed Lists",
+            "helper" => "These checklists have been completed and can no longer be edited.",
             "icon" => "bi bi-check-circle text-success",
             "status" => "completed"
         ]
     ] as $section): ?>
     <h1 class="h4 font-montserrat"><i class="<?= $section['icon'] ?>"></i> <?= $section['title'] ?></h1>
+    <p class="text-muted fst-italic"><?= $section['helper'] ?></p>
     <table class="table table-sm mb-5 table-striped table-hover">
         <thead>
             <tr>

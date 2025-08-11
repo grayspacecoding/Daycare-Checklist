@@ -36,6 +36,11 @@ class Checklists extends BaseController
         exit;
     }
 
+    private function checkForDuplicate($room, $date): bool{
+        $this->clModel->where(['room' => $room, 'date_applied' => $date]);
+        return $this->clModel->countAllResults() > 0;
+    }
+
     public function postCrud($action, $specifier = false): object
     {
         try{
@@ -51,6 +56,11 @@ class Checklists extends BaseController
                 case "create":
                     if (!$this->request->getCookie('room')) {
                         return $this->response->setJSON($this->failNoRoom());
+                    }
+                    if ($this->checkForDuplicate($this->request->getCookie('room'), date('Y-m-d'))) {
+                        return $this->response->setJSON(json_encode([
+                            'error' => 'A checklist for today already exists for this room.'
+                        ]));
                     }
                     $uuid = Uuid::uuid4()->toString();
                     $data = [

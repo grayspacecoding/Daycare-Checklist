@@ -29,7 +29,7 @@ document.addEventListener('room.change', (event) => {
 });
 
 document.addEventListener('room.changed', event => {
-    changeRoomIndicator(event.detail);
+    // changeRoomIndicator(event.detail);
 });
 
 document.addEventListener('room.exited', () =>{window.location.href = '/';});
@@ -43,7 +43,7 @@ document.addEventListener('room.exit', event => {
         alert('Failed to exit room. Please try again.');
     });
 });
-
+/*
 document.addEventListener('DOMContentLoaded', async event => {
     try {
         const response = await fetch('/sessionmods/getroom', {method: 'POST'});
@@ -52,4 +52,4 @@ document.addEventListener('DOMContentLoaded', async event => {
     } catch (error) {
         console.error('Error fetching room:', error);
     }
-});
+});*/

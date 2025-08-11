@@ -39,7 +39,7 @@ class Dashboard extends BaseController
         elseif ($list->status == 'active') {$items[] = 'The previous checklist is still in progress!'; $counts = 1;}
         else {
             $responses = json_decode($list->form_data);
-            $schemaModel = new \App\Models\ChecklistSchema();
+            $schemaModel = new \App\Models\Checklistschema();
             $schema = $schemaModel->currentVersion();
             foreach ($schema['checklist_items'] as $section) {
                 $index = 0;

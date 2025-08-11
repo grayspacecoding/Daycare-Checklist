@@ -34,6 +34,8 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        'goToDashboard' => \App\Filters\GoToDashboardFromIndexIfLoggedIn::class,
+        'goToIntro'     => \App\Filters\GoToIntroIfNotLoggedIn::class,
     ];
 
     /**
@@ -69,6 +71,7 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
+            'goToIntro' => ['except' => ['/', 'sessionmods/*', 'uimods/*']],
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
@@ -103,5 +106,7 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public array $filters = [];
+    public array $filters = [
+            'goToDashboard' => ['before' => ['/']]
+        ];
 }

@@ -36,6 +36,7 @@ class Filters extends BaseFilters
         'performance'   => PerformanceMetrics::class,
         'goToDashboard' => \App\Filters\GoToDashboardFromIndexIfLoggedIn::class,
         'goToIntro'     => \App\Filters\GoToIntroIfNotLoggedIn::class,
+        'lockAdmin'     => \App\Filters\LockAdmin::class,
     ];
 
     /**
@@ -71,7 +72,7 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
-            'goToIntro' => ['except' => ['/', 'sessionmods/*', 'uimods/*']],
+            'goToIntro' => ['except' => ['/', 'sessionmods/*', 'uimods/*', 'evaluations', 'evaluations/*']],
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
@@ -107,6 +108,6 @@ class Filters extends BaseFilters
      * @var array<string, array<string, list<string>>>
      */
     public array $filters = [
-            'goToDashboard' => ['before' => ['/']]
+            'lockAdmin' => ['before' => ['evaluations', 'evaluations/*']],
         ];
 }

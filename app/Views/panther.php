@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Daily Checklist | LSF</title>
+        <title>Administrative | LSF</title>
         <script>
             (function() {
                 const themeKey = 'preferred-theme';
@@ -84,21 +84,18 @@
         <div style="min-height: 100vh;" class="d-flex flex-column">
             <header class="d-flex justify-content-between align-items-center py-2 px-3 bg-secondary bg-opacity-25">
                 <div class="fs-4 fw-bold font-montserrat">
-                    <span class="d-none d-sm-inline">Daily Checklist | </span>
-                    <span class="<?= isset($room)? "text-$room": "" ?>" data-room-indicator><?= isset($room)? ucfirst($room)." Room" : 'LSF' ?></span>
+                    <span class="d-none d-sm-inline">Administrative | </span>
+                    <span class="text-info" data-room-indicator>Evaluations</span>
                 </div>
                 <div class="d-flex gap-2 fs-5 align-items-end">
-                    <? if(!isset($room)): ?>
-                    <a data-thisisa-tooltip title="Administration" href="/evaluations" class="text-decoration-none text-dark"><i class="fa-solid fa-file-lines"></i></a>
-                    <? endif ?>
-                    <? if(isset($room)): ?>
-                    <a href="https://parseley.atlassian.net/servicedesk/customer/portal/34" target="_blank" data-thisisa-tooltip title="IT Help"><i class="fa-solid fa-bell-concierge text-dark"></i></a>
-                    <a href="/dashboard" data-thisisa-tooltip title="Dashboard"><i class="fa-solid fa-house-chimney text-dark"></i></a>
-                    <span role="button" data-thisisa-tooltip title="New Checklist" onclick="document.dispatchEvent(new Event('checklist.new'))"><i class="fa-solid fa-file-circle-plus text-dark"></i></span>
-                    <? endif ?>
+                    <? if($room): ?>
+                        <? endif ?>
+                        <a href="https://parseley.atlassian.net/servicedesk/customer/portal/34" target="_blank" data-thisisa-tooltip title="IT Help"><i class="fa-solid fa-bell-concierge text-dark"></i></a>
+                        <a href="/evaluations" data-thisisa-tooltip title="Dashboard"><i class="fa-solid fa-house-chimney text-dark"></i></a>
                     <span role="button" data-thisisa-tooltip title="Toggle dark/light mode" onclick="document.dispatchEvent(new Event('darklight.toggle'))"><i class="fa-solid fa-circle-half-stroke"></i></span>
+                    <span role="button" data-thisisa-tooltip title="Admin mode logout" onclick="document.dispatchEvent(new Event('admin.deauth'))"><i class="fa-solid fa-right-from-bracket"></i></span>
                     <div style="width: 0.5em;" class="d-none d-sm-block"></div>
-                    <span role="button" data-thisisa-tooltip title="Choose a room" onclick="document.dispatchEvent(new Event('room.exit'))"><img src="/quad.svg" class="" style="height: 1.7rem !important;"></span>
+                    <a role="button" data-thisisa-tooltip title="Back to checklists" href="/"><img src="/quad.svg" class="" style="height: 1.7rem !important;"></a>
                 </div>
             </header>
             <main class="flex-grow-1">
@@ -113,13 +110,13 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
         <script type="module">
             import { toggleTheme } from '<?= base_url('uimods/lightdark') ?>';
-            import '<?= base_url('uimods/setroom') ?>';
-            import '<?= base_url('uimods/newchecklist') ?>';
 
             document.addEventListener('darklight.toggle', toggleTheme);
             
             const tooltipTriggerList = document.querySelectorAll('[data-thisisa-tooltip]');
             const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
+            document.addEventListener('admin.deauth', () => {fetch('/sessionmods/admindeauth', {method: 'POST'}).then(response => {window.location.reload();})});
         </script>
     </body>
 </html>

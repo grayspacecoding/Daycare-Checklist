@@ -24,4 +24,21 @@ class Sessionmods extends BaseController
         $result = $setroomModel->clearRoom();
         return '';
     }
+
+    public function postAdminauth() {
+        $passcode = $this->request->getPost('passcode');
+        if ($passcode === getenv('admin.auth.passcode')) {
+            session()->set('isAdmin', true);
+            return $this->response->setJSON(['status' => 'success']);
+        }
+        return $this->response->setJSON(['status' => 'error']);
+    }
+
+    public function postAdmindeauth() {
+        if (session()->get('isAdmin')) {
+            session()->remove('isAdmin');
+            return json_encode(['status' => 'success']);
+        }
+        return $this->response->setJSON(['status' => 'error']);
+    }
 }

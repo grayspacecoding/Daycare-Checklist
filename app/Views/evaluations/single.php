@@ -24,7 +24,7 @@
                 <div class="row mb-5 pb-2" style="border-bottom: 1px #777 dotted;">
                     <div class="col-7 d-flex gap-1 font-monospace">
                         <div class="text-muted">1</div>
-                        <input type="range" data-indexnum="<?= $index ?>" class="form-range flex-grow-1" min="1" max="5" step="1" id="r[<?= $index ?>]" name="r[<?= $index ?>]" value="<?= $responses[$index] ?: 3 ?>" required>
+                        <input type="range" data-indexnum="<?= $index ?>" class="form-range flex-grow-1" min="1" max="5" step="1" id="r[<?= $index ?>]" name="r[<?= $index ?>]" value="<?= isset($responses[$index]) ? $responses[$index] : 3 ?>" required>
                         <div class="text-dark fw-bold">5</div>
                     </div>
                     <div class="col-5 text-center small fw-bold" id="feedback-<?= $index ?>"></div>

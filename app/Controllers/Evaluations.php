@@ -33,6 +33,7 @@ class Evaluations extends BaseController
     public function postNeweval() {
         try {
             $data = $this->request->getPost();
+            $data['responses'] = '[]';
             $this->evModel->insert($data);
             return $this->response->setJSON(['status' => "success", 'id' => $this->evModel->getInsertID()]);
         } catch (\Exception $e) {

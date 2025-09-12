@@ -15,6 +15,6 @@
         container.classList.add('text-secondary');
         container.innerHTML = '...';
     });
-    document.addEventListener('room.changed', () => {window.location.reload();});
+    document.addEventListener('room.changed', () => {window.location.href = '/dashboard';});
 </script>
 <?= $this->endSection() ?>
